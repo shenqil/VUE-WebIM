@@ -2,7 +2,7 @@
   "name": "@shen9401/vue-web-im",
   "version": "0.0.1",
   "description": "vue web端im聊天客户端",
-  "main": "dist/vue-virtual.js",
+  "main": "dist/vue-web-im.js",
   "module": "src/index.js",
   "scripts": {
     "dev": "parcel demo/index.html",

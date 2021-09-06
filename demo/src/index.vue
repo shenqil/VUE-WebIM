@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <WebIM/>
+    111
   </div>
 </template>
 

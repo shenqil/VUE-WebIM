@@ -16,9 +16,10 @@
 
 <script>
 export default {
-  created() {},
   methods: {
-    handleExpand() {},
+    handleExpand() {
+      this.$emit("on-expand");
+    },
   },
 };
 </script>
@@ -36,6 +37,7 @@ export default {
   flex-flow: row;
   justify-content: space-between;
   align-items: center;
+  cursor: move;
 
   &__left {
     display: flex;

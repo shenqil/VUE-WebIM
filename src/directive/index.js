@@ -5,7 +5,6 @@ export default function directiveInit(Vue) {
     const className = binding.value;
 
     el.style.position = "fixed";
-    el.style.cursor = "move";
 
     Vue.nextTick(() => {
       const w =

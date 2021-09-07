@@ -1,6 +1,8 @@
 import view from "./views/index.vue";
 import createIMStore from "./store/createIMStore";
 import createDirective from "./directive/index";
+import timSdk from "./server/timSdk/index";
+
 let Vue, options;
 
 function createView(Component, props) {
@@ -33,6 +35,8 @@ export default {
       createIMStore(Vue, o);
       // 创建IM组件
       createView(view);
+
+      timSdk.login("user0");
     }
   },
 };

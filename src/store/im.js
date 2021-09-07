@@ -1,8 +1,14 @@
+import timSdk from "../server/timSdk/index";
+
 const state = {};
 
 const mutations = {};
 
-const actions = {};
+const actions = {
+  async sendTextMsg({ commit }, { msg, to }) {
+    await timSdk.sendTextMsg(msg, to);
+  },
+};
 
 const getters = {};
 

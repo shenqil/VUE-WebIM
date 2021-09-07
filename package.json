@@ -24,6 +24,8 @@
   },
   "dependencies": {
     "css-loader": "^5.0.1",
+    "regenerator-runtime": "^0.13.9",
+    "tim-js-sdk": "^2.13.1",
     "view-design": "^4.6.1",
     "vuex": "^3.6.2"
   }

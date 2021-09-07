@@ -4,6 +4,7 @@ import Vuex from "vuex";
 import ViewUI from "view-design";
 import WebIM from "../../src/index";
 import "view-design/dist/styles/iview.css";
+import "regenerator-runtime/runtime";
 
 Vue.use(ViewUI);
 Vue.use(Vuex);

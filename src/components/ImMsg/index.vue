@@ -31,7 +31,9 @@
       </div>
 
       <!-- 消息列表 -->
-      <div class="web-im-msg__right-list"></div>
+      <div class="web-im-msg__right-list">
+        <ImMsgList />
+      </div>
       <!-- 输入框 -->
       <div class="web-im-msg__right-input">
         <ImInput />
@@ -43,10 +45,12 @@
 <script>
 import ImConvers from "../ImConvers/index.vue";
 import ImInput from "../ImInput/index.vue";
+import ImMsgList from "../ImMsgList/index.vue";
 export default {
   components: {
     ImConvers,
     ImInput,
+    ImMsgList,
   },
   methods: {
     handleClose() {

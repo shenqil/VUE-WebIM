@@ -52,6 +52,7 @@ export default {
     background: none;
     width: 6px;
     height: 6px;
+    cursor: pointer;
   }
 
   ::-webkit-scrollbar-thumb {
@@ -104,6 +105,7 @@ export default {
     height: calc(100% - 40px);
     overflow-x: hidden;
     overflow-y: auto;
+    cursor: pointer;
   }
   &__container {
     display: flex;

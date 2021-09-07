@@ -33,16 +33,20 @@
       <!-- 消息列表 -->
       <div class="web-im-msg__right-list"></div>
       <!-- 输入框 -->
-      <div class="web-im-msg__right-input"></div>
+      <div class="web-im-msg__right-input">
+        <ImInput />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import ImConvers from "../ImConvers/index.vue";
+import ImInput from "../ImInput/index.vue";
 export default {
   components: {
     ImConvers,
+    ImInput,
   },
   methods: {
     handleClose() {
@@ -92,6 +96,16 @@ export default {
   &__right {
     width: calc(100% - 313px);
     height: 100%;
+    &-input {
+      width: 100%;
+      height: 132px;
+      background: #ffffff;
+      border-top: 1px solid #f0f0f0;
+    }
+    &-list {
+      width: 100%;
+      height: calc(100% - 213px);
+    }
   }
   &__head {
     width: 100%;

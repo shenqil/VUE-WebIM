@@ -22,7 +22,11 @@
 
     <div class="web-im-convers__scroll">
       <div class="web-im-convers__container">
-        <ImConversItem v-for="i in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]" :key="i" />
+        <im-convers-item
+          v-for="item in conversList"
+          :key="item.conversationID"
+          :conversation="item"
+        />
       </div>
     </div>
   </div>
@@ -30,6 +34,7 @@
 
 <script>
 import ImConversItem from "../ImConversItem/index.vue";
+import { mapGetters } from "vuex";
 export default {
   components: {
     ImConversItem,
@@ -38,6 +43,15 @@ export default {
     return {
       activeTab: "all",
     };
+  },
+  computed: {
+    ...mapGetters("__imStore", ["conversationList"]),
+    conversList() {
+      if (this.activeTab === "unread") {
+        return this.conversationList.filter((item) => item.unreadCount != 0) || [];
+      }
+      return this.conversationList;
+    },
   },
 };
 </script>

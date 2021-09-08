@@ -1,29 +1,61 @@
 <template>
   <div class="web-im-convers-item">
     <Badge dot>
-      <img class="web-im-convers-item__avatar" src="./img/none.png" alt="" />
+      <img
+        v-if="userProfile.avatar"
+        class="web-im-convers-item__avatar"
+        :src="userProfile.avatar"
+      />
+      <img v-else class="web-im-convers-item__avatar" src="./img/none.png" />
     </Badge>
 
     <div class="web-im-convers-item__info">
       <div class="web-im-convers-item__top">
         <div class="web-im-convers-item__user">
-          <div class="web-im-convers-item__user-name">张三</div>
+          <div class="web-im-convers-item__user-name">{{ userProfile.nickName }}</div>
 
-          <div class="web-im-convers-item__user-lable">展商</div>
+          <div class="web-im-convers-item__user-lable">{{ userProfile.roleName }}</div>
         </div>
 
-        <div class="web-im-convers-item__time">2020/12/25</div>
+        <div class="web-im-convers-item__time">{{ lastMsg.time }}</div>
       </div>
 
-      <div class="web-im-convers-item__info-company">深圳市前海手绘科技文化有限公司</div>
+      <div class="web-im-convers-item__info-company">{{ userProfile.companyName }}</div>
 
       <div class="web-im-convers-item__info-msg">
-        消息内容消息内容消息内容消息内容消息内容消息内容
+        {{ lastMsg.content }}
       </div>
     </div>
   </div>
 </template>
-
+<script>
+export default {
+  props: {
+    conversation: {
+      type: Object,
+      default: () => {},
+    },
+  },
+  computed: {
+    userProfile() {
+      const userProfile = this.conversation.userProfile || {};
+      return {
+        avatar: userProfile.avatar,
+        nickName: userProfile.nick || userProfile.userID,
+        roleName: "展商",
+        companyName: "深圳市前海手绘科技文化有限公司",
+      };
+    },
+    lastMsg() {
+      const lastMessage = this.conversation.lastMessage || {};
+      return {
+        time: lastMessage.lastTime || 0,
+        content: lastMessage.payload?.text || "",
+      };
+    },
+  },
+};
+</script>
 <style lang="scss">
 @import "../../assets/style/base.scss";
 .web-im-convers-item {

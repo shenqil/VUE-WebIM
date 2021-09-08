@@ -11,15 +11,6 @@ function createView(Component, props) {
   }).$mount();
 
   document.body.appendChild(vm.$el);
-
-  const comp = vm.$children[0];
-
-  comp.remove = function() {
-    document.body.removeChild(vm.$el);
-    vm.$destroy();
-  };
-
-  return comp;
 }
 
 export default {
@@ -30,10 +21,17 @@ export default {
       options = o;
 
       // 挂载自定义指令
-      createDirective(Vue);
+      createDirective(Vue, o);
       // 创建IM Store
       createIMStore(Vue, o);
-      // 创建IM组件
+
+      Vue.mixin({
+        beforeCreate: function() {
+          if (!this.$store) {
+            this.$store = options.store;
+          }
+        },
+      });
       createView(view);
 
       timSdk.login("user0");

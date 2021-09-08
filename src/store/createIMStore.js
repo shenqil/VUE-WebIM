@@ -1,4 +1,5 @@
 import imStore from "./im";
+import eventInit from "./imEvent";
 
 function create(Vue, { store }) {
   if (!store) {
@@ -6,6 +7,7 @@ function create(Vue, { store }) {
   }
 
   store.registerModule("__imStore", imStore);
+  eventInit(store);
 }
 
 export default create;

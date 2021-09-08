@@ -22,11 +22,17 @@
 
     <div class="web-im-convers__scroll">
       <div class="web-im-convers__container">
-        <im-convers-item
+        <div
           v-for="item in conversList"
           :key="item.conversationID"
-          :conversation="item"
-        />
+          :class="{
+            'web-im-convers__item--active':
+              item.conversationID === currentConvers.conversationID,
+          }"
+          @click="handleConversation(item)"
+        >
+          <im-convers-item :conversation="item" />
+        </div>
       </div>
     </div>
   </div>
@@ -34,7 +40,7 @@
 
 <script>
 import ImConversItem from "../ImConversItem/index.vue";
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
 export default {
   components: {
     ImConversItem,
@@ -45,12 +51,44 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("__imStore", ["conversationList"]),
+    ...mapState("__imStore", ["currentConversation"]),
+    ...mapGetters("__imStore", [
+      "conversationList",
+      "conversationIsCompleted",
+      "currentConversationID",
+      "conversationID",
+    ]),
     conversList() {
       if (this.activeTab === "unread") {
         return this.conversationList.filter((item) => item.unreadCount != 0) || [];
       }
       return this.conversationList;
+    },
+    currentConvers: {
+      get: function () {
+        return this.currentConversation;
+      },
+      set: function (v) {
+        this.activeConversation(v);
+      },
+    },
+  },
+  watch: {
+    conversationID: {
+      handler(id) {
+        if (!id || this.conversationIsCompleted) {
+          return;
+        }
+
+        this.getMsgList();
+      },
+      immediate: true,
+    },
+  },
+  methods: {
+    ...mapActions("__imStore", ["getMsgList", "activeConversation"]),
+    handleConversation(item) {
+      this.currentConvers = item;
     },
   },
 };
@@ -124,6 +162,9 @@ export default {
   &__container {
     display: flex;
     flex-flow: column;
+  }
+  &__item--active {
+    background: #f0f0f0;
   }
 }
 </style>

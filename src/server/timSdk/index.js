@@ -28,7 +28,7 @@ class TIMSdk {
     this.tim.on(TIM.EVENT.MESSAGE_RECEIVED, (event) => {
       console.log(event, "tim - MESSAGE_RECEIVED");
       if (event.name === TIM.EVENT.MESSAGE_RECEIVED) {
-        this.onReciveMsg(event.data);
+        this.onReciveMsg(event);
       }
 
       // 收到推送的单聊、群聊、群提示、群系统通知的新消息，可通过遍历 event.data 获取消息列表数据并渲染到页面
@@ -223,6 +223,27 @@ class TIMSdk {
         .then((res) => {
           console.log(res);
           resolve(res.data.conversationList);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  }
+
+  /**
+   * 获取消息列表
+   * @conversationID 会话id
+   * @nextReqMessageID 下一条消息id,非必传
+   * @count 条数 非必传入
+   * */
+
+  getMsgList({ conversationID, nextReqMessageID, count = 15 }) {
+    return new Promise((resolve, reject) => {
+      this.tim
+        .getMessageList({ conversationID, nextReqMessageID, count })
+        .then((res) => {
+          const { messageList, nextReqMessageID, isCompleted } = res.data;
+          resolve({ messageList, nextReqMessageID, isCompleted });
         })
         .catch((err) => {
           reject(err);

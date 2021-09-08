@@ -1,8 +1,8 @@
 <template>
   <div class="web-im-msg-list">
-    <Scroll :on-reach-top="handleReachTop" :height="420">
+    <Scroll ref="scroll" :on-reach-top="handleReachTop" :height="420">
       <div class="web-im-msg-list__container">
-        <div class="web-im-msg-list__item" v-for="item in msgList" :key="item.id">
+        <div class="web-im-msg-list__item" v-for="item in msgList" :key="item.ID">
           <ImMsgItem :msg="item" />
         </div>
       </div>
@@ -12,37 +12,35 @@
 
 <script>
 import ImMsgItem from "../ImMsgItem/index.vue";
-let addIndex = 0;
+import { mapActions, mapGetters } from "vuex";
+
 export default {
-  data() {
-    return {
-      msgList: [],
-    };
-  },
   components: {
     ImMsgItem,
   },
-  created() {
-    for (let index = 0; index < 20; index++) {
-      this.msgList.push({
-        id: addIndex++,
-        name: `张三${addIndex}`,
+  computed: {
+    ...mapGetters("__imStore", ["msgList"]),
+  },
+  watch: {
+    msgList() {
+      this.$nextTick(() => {
+        this.scrollBottom();
       });
-    }
+    },
   },
   methods: {
+    ...mapActions("__imStore", ["getMsgList"]),
     handleReachTop() {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          for (let index = 0; index < 20; index++) {
-            this.msgList.unshift({
-              id: addIndex++,
-              name: `张三${addIndex}`,
-            });
-          }
-          resolve();
-        }, 1000);
-      });
+      return this.getMsgList();
+    },
+    /**
+     * 滚动到底部
+     * */
+    scrollBottom() {
+      const scrollElement = this.$refs.scroll.$el?.children[0];
+      if (scrollElement) {
+        scrollElement.scrollTop = scrollElement.scrollHeight;
+      }
     },
   },
 };

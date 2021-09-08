@@ -1,15 +1,16 @@
 <template>
-  <div class="web-im-msg-item" :class="{ 'web-im-msg-item--end': msg.id % 2 == 0 }">
-    <div class="web-im-msg-item__user">{{ msg.name }}</div>
+  <div class="web-im-msg-item" :class="{ 'web-im-msg-item--end': isSelf }">
+    <div class="web-im-msg-item__user">{{ userName }}</div>
 
     <div class="web-im-msg-item__content">
-      <ImMsgText />
+      <ImMsgText :msg="msg" />
     </div>
   </div>
 </template>
 
 <script>
 import ImMsgText from "../ImMsgText/index.vue";
+import { mapState } from "vuex";
 export default {
   props: {
     msg: {
@@ -19,6 +20,15 @@ export default {
   },
   components: {
     ImMsgText,
+  },
+  computed: {
+    ...mapState("__imStore", ["userID"]),
+    isSelf() {
+      return this.msg.from == this.userID;
+    },
+    userName() {
+      return this.msg.from;
+    },
   },
 };
 </script>

@@ -1,14 +1,28 @@
 <template>
   <div class="web-im-imput">
     <div class="web-im-imput__scroll">
-      <div class="web-im-imput__content" contenteditable="true"></div>
+      <div ref="editor" class="web-im-imput__content" contenteditable="true"></div>
     </div>
 
     <div class="web-im-imput__bottom">
-      <div class="web-im-imput__btn">发送</div>
+      <div class="web-im-imput__btn" @click="handleSend">发送</div>
     </div>
   </div>
 </template>
+
+<script>
+import { mapActions } from "vuex";
+export default {
+  methods: {
+    ...mapActions("__imStore", ["sendTextMsg"]),
+    handleSend() {
+      const content = this.$refs.editor.innerHTML;
+      this.$refs.editor.innerHTML = "";
+      this.sendTextMsg({ msg: content });
+    },
+  },
+};
+</script>
 
 <style lang="scss">
 @import "../../assets/style/base.scss";

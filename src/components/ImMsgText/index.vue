@@ -1,8 +1,24 @@
 <template>
   <div class="web-im-msg-text">
-    消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容
+    {{ text }}
   </div>
 </template>
+
+<script>
+export default {
+  props: {
+    msg: {
+      type: Object,
+      default: () => {},
+    },
+  },
+  computed: {
+    text() {
+      return this.msg.payload?.text || "";
+    },
+  },
+};
+</script>
 
 <style lang="scss">
 .web-im-msg-text {
